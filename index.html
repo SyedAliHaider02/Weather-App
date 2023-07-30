@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Weather App using Flask in Python</title>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+</head>
+<body>	
+	<div class="container">
+	    <br><br><br>
+		<div class="row"><h2>Weather App using Flask in Python</h2></div>
+		<br>
+		<div class="row">		   
+			<p>Get weather details of any city around the world.</p>		   
+		</div>
+		<div class="row">						
+			{% block content %}	                		
+				<form action="{{ url_for("index")}}" method="post">
+				<div class="form-group">
+				<label for="cityName">City Name:</label>
+				<input type="text" id="cityName" name="cityName" value="{{cityName}}" placeholder="City Name">
+				<button class="submit">Find</button>
+				{% if error is defined and error %}
+					<br><br><span class="alert alert-danger">Error: Please enter valid city name.</span></br>
+				{% endif %}
+				</div>				
+			{% endblock %}
+			{% if data is defined and data %}
+			
+			<div class="card shadow-0 border">
+				<div class="card-body p-4">
+	  
+				  <h4 class="mb-1 sfw-normal">{{data.name}}, {{data.sys.country}}</h4>
+				  <p class="mb-2">Current temperature: <strong>{{data.main.temp|round -273}}°C</strong></p>
+				  <p>Feels like: <strong>{{data.main.feels_like|round -273}}°C</strong></p>
+				  <p>Max: <strong>{{data.main.temp_max|round -273}}°C</strong>, Min: <strong>{{data.main.temp_min|round -273}}°C</strong></p>
+	  
+				  <div class="d-flex flex-row align-items-center">
+					<p class="mb-0 me-4">{{data["weather"][0]["main"]}},{{data["weather"][0]["description"]}}</p>
+					<i class="fas fa-cloud fa-3x" style="color: #eee;"></i>
+				  </div>
+	  
+				</div>
+			  </div>
+			{% endif %}
+		</div>
+	</div>
+</body>
+</html>
